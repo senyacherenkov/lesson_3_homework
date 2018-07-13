@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <tuple>
 #include <stdexcept>
+#include "filter_helper.h"
 // ("",  '.') -> [""]
 // ("11", '.') -> ["11"]
 // ("..", '.') -> ["", "", ""]
@@ -28,121 +29,33 @@ std::vector<std::string> split(const std::string &str, char d)
 
 	r.push_back(str.substr(start));
 
-	return r;
+    return r;
 }
 
 int main(int argc, char const *argv[])
 {
 	try
 	{
-		std::vector<std::vector<std::string> > ip_pool{ { "1", "10", "2", "1" },
-														{ "1", "2", "3", "4" },
-														{ "1", "2", "6", "1" }, 
-														{ "70", "2", "6", "1" },
-														{ "46", "70", "6", "1" },
-														{ "46", "128", "6", "1" },
-														{ "168", "56", "46", "1" }, };
-		/*std::vector<std::tuple<std::string, std::string, std::string, std::string> > ip_pool2;
-		ip_pool2.push_back(std::make_tuple("1", "10", "2", "1"));
-		ip_pool2.push_back(std::make_tuple("1", "2", "3", "4"));
-		ip_pool2.push_back(std::make_tuple("1", "2", "6", "1"));*/
+        std::vector<std::vector<std::string> > ip_pool;
 
-		/*{ { "1", "10", "2", "1" },
-		{ "1", "2", "3", "4" },
-		{ "1", "2", "6", "1" }, };*/
+        for (std::string line; std::getline(std::cin, line);)
+        {
+            std::vector<std::string> v = split(line, '\t');
+            ip_pool.push_back(split(v.at(0), '.'));
+        }
 
-		//for (std::string line; std::getline(std::cin, line);)
-		//{
-		//	std::vector<std::string> v = split(line, '\t');
-		//	ip_pool.push_back(split(v.at(0), '.'));
-		//}9-
+        //reverse lexicographically sort
+        lexicographRevSort(ip_pool);
+        showList(ip_pool);
 
-		//// TODO reverse lexicographically sort
-
-		
-
-		std::sort(ip_pool.rbegin(), ip_pool.rend(),[](const std::vector<std::string> & lhs,
-														const std::vector<std::string>& rhs)
-													{
-															return std::make_tuple(std::stoi(lhs.at(0)), std::stoi(lhs.at(1)), std::stoi(lhs.at(2)), std::stoi(lhs.at(3))) <
-																std::make_tuple(std::stoi(rhs.at(0)), std::stoi(rhs.at(1)), std::stoi(rhs.at(2)), std::stoi(rhs.at(3)));
-													});
-
-		for (std::vector<std::vector<std::string> >::const_iterator ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-		{
-			for (std::vector<std::string>::const_iterator ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
-			{
-				if (ip_part != ip->cbegin())
-				{
-					std::cout << ".";
-
-				}
-				std::cout << *ip_part;
-			}
-			std::cout << std::endl;
-		}
-
-		// TODO filter by first byte and output
-		for (std::vector<std::vector<std::string> >::const_iterator ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-		{
-			std::string strPart(*ip->cbegin());
-			if(strcmp(strPart.c_str(), "1") != 0)
-				continue;
-
-			for (std::vector<std::string>::const_iterator ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
-			{
-				if (ip_part != ip->cbegin())
-				{
-					std::cout << ".";
-				}
-				std::cout << *ip_part;
-			}
-			std::cout << std::endl;
-		}
+        // filter by first byte and output
+        filter(ip_pool, "46");
 
 		// TODO filter by first and second bytes and output
-		for (std::vector<std::vector<std::string> >::const_iterator ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-		{
-			std::string strPart1(*ip->cbegin());
-			std::string strPart2(*(ip->cbegin() + 1));
-			if ((strcmp(strPart1.c_str(), "46") != 0) || (strcmp(strPart2.c_str(), "70") != 0))
-				continue;
-
-			for (std::vector<std::string>::const_iterator ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
-			{
-				if (ip_part != ip->cbegin())
-				{
-					std::cout << ".";
-				}
-				std::cout << *ip_part;
-			}
-			std::cout << std::endl;
-		}
+        filter(ip_pool, "46", "70");
 
 		// TODO filter by any byte and output
-		for (std::vector<std::vector<std::string> >::const_iterator ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-		{
-			bool isFortySix = false;
-			for (std::vector<std::string>::const_iterator ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
-			{
-				std::string strPart1(*ip_part);
-				if (strcmp(strPart1.c_str(), "46") == 0)
-					isFortySix = true;
-			}
-
-			if (isFortySix)
-			{
-				for (std::vector<std::string>::const_iterator ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
-				{
-					if (ip_part != ip->cbegin())
-					{
-						std::cout << ".";
-					}
-					std::cout << *ip_part;
-				}
-				std::cout << std::endl;
-			}
-		}
+        filter_any(ip_pool, "46");
 		// 222.173.235.246
 		// 222.130.177.64
 		// 222.82.198.61
