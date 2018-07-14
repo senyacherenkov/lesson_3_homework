@@ -10,7 +10,7 @@ add_library(filter_helperlib filter_helper.cpp)
 
 add_executable(ip_filter_test ip_filter_test.cpp)
 
-set_target_properties(ip_filter_cli ip_filter_test PROPERTIES
+set_target_properties(ip_filter_cli ip_filter_test filter_helperlib PROPERTIES
   CXX_STANDARD 14
   CXX_STANDARD_REQUIRED ON
   COMPILE_OPTIONS -Wpedantic -Wall -Wextra
