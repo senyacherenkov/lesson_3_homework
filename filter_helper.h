@@ -2,8 +2,13 @@
 #include <vector>
 #include <string>
 
-void lexicographRevSort(std::vector<std::vector<std::string> >& input);
-void showList(std::vector<std::vector<std::string> >& input);
-std::string showIp(std::vector<std::string> & input);
-std::vector<std::string> filter(std::vector<std::vector<std::string> >& input, const char* byte1, const char* byte2 = nullptr);
-std::vector<std::string> filter_any(std::vector<std::vector<std::string> >& input, const char* byte1);
+namespace filtering {
+
+    using addressList = std::vector<std::vector<std::string>>;
+
+    void lexicographRevSort(addressList& input);
+    std::string showAndGetIp(const std::vector<std::string> & input);
+    void showList(const addressList& input);
+    std::vector<std::string> filter(const addressList& input, const char* byte1, const char* byte2 = nullptr);
+    std::vector<std::string> filter_any(const addressList& input, const char* byte1);
+}

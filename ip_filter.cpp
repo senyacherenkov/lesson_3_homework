@@ -45,17 +45,17 @@ int main(int argc, char const *argv[])
         }
 
         //reverse lexicographically sort
-        lexicographRevSort(ip_pool);
-        showList(ip_pool);
+        filtering::lexicographRevSort(ip_pool);
+        filtering::showList(ip_pool);
 
         // filter by first byte and output
-        filter(ip_pool, "46");
+        filtering::filter(ip_pool, "1");
 
 		// TODO filter by first and second bytes and output
-        filter(ip_pool, "46", "70");
+        filtering::filter(ip_pool, "46", "70");
 
 		// TODO filter by any byte and output
-        filter_any(ip_pool, "46");
+        filtering::filter_any(ip_pool, "46");
 		// 222.173.235.246
 		// 222.130.177.64
 		// 222.82.198.61
