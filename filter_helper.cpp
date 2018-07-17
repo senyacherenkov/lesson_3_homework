@@ -5,31 +5,25 @@
 
 namespace filtering {
 
-std::string showAndGetIp(const std::vector<std::string> & input)
+std::string getIp(const std::vector<std::string> & input)
 {
     std::string rIpStr;
 
-    rIpStr.append(input.at(0));
-    std::cout << rIpStr;
+    rIpStr.append(input.at(0));    
 
     for(std::vector<std::string>::const_iterator ip_part = input.cbegin() + 1; ip_part != input.cend(); ++ip_part)
     {
         rIpStr.push_back('.');
-        std::cout << ".";
-
-        rIpStr.append(*ip_part);
-        std::cout << *ip_part;
+        rIpStr.append(*ip_part);        
     }
-    std::cout << std::endl;
+
     return rIpStr;
 }
 
 void showList(const addressList& input)
 {
     for (auto & ip: input)
-    {
-        showAndGetIp(ip);
-    }
+        std::cout << getIp(ip) << std::endl;
 }
 
 std::vector<std::string> filter(const addressList& input, const char *byte1, const char *byte2)
@@ -48,7 +42,8 @@ std::vector<std::string> filter(const addressList& input, const char *byte1, con
                 continue;
         }
 
-        rVecStr.push_back(showAndGetIp(ip));
+        std::string suitableIp = getIp(ip);
+        rVecStr.push_back(suitableIp);
     }
     return rVecStr;
 }
@@ -61,14 +56,16 @@ std::vector<std::string> filter_any(const addressList& input, const char *byte1)
         bool isByteFounded = false;
         for (auto& ip_part: ip)
         {
-            if (std::strcmp(ip_part.c_str(), byte1) == 0)
+            if (std::strcmp(ip_part.c_str(), byte1) == 0) {
                 isByteFounded = true;
+                break;
+            }
         }
 
         if (isByteFounded)
         {
-            std::string foundedStr = showAndGetIp(ip);
-            rVecStr.push_back(foundedStr);
+            std::string foundedIp = getIp(ip);
+            rVecStr.push_back(foundedIp);
         }
     }
     return rVecStr;
@@ -94,8 +91,6 @@ void lexicographRevSort(addressList& input)
         return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), ip_compare);
     });
 }
-
-
 
 }
 

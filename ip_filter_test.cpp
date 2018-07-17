@@ -17,13 +17,13 @@ BOOST_AUTO_TEST_CASE(check_proper_sorting)
 {
     lexicographRevSort(ip_pool);
 
-    BOOST_CHECK_MESSAGE( showAndGetIp(ip_pool.at(0)) == "168.56.46.1", "actual value: " << showAndGetIp(ip_pool.at(0)) );
-    BOOST_CHECK_MESSAGE( showAndGetIp(ip_pool.at(1)) == "70.2.6.1", "actual value: " << showAndGetIp(ip_pool.at(1)) );
-    BOOST_CHECK_MESSAGE( showAndGetIp(ip_pool.at(2)) == "46.128.6.1", "actual value: " << showAndGetIp(ip_pool.at(2)) );
-    BOOST_CHECK_MESSAGE( showAndGetIp(ip_pool.at(3)) == "46.70.6.1", "actual value: " << showAndGetIp(ip_pool.at(3)) );
-    BOOST_CHECK_MESSAGE( showAndGetIp(ip_pool.at(4)) == "1.10.2.1", "actual value: " << showAndGetIp(ip_pool.at(4)) );
-    BOOST_CHECK_MESSAGE( showAndGetIp(ip_pool.at(5)) == "1.2.6.1", "actual value: " << showAndGetIp(ip_pool.at(5)) );
-    BOOST_CHECK_MESSAGE( showAndGetIp(ip_pool.at(6)) == "1.2.3.4", "actual value: " << showAndGetIp(ip_pool.at(6)) );
+    BOOST_CHECK_MESSAGE( getIp(ip_pool.at(0)) == "168.56.46.1", "actual value: " << getIp(ip_pool.at(0)) );
+    BOOST_CHECK_MESSAGE( getIp(ip_pool.at(1)) == "70.2.6.1", "actual value: " << getIp(ip_pool.at(1)) );
+    BOOST_CHECK_MESSAGE( getIp(ip_pool.at(2)) == "46.128.6.1", "actual value: " << getIp(ip_pool.at(2)) );
+    BOOST_CHECK_MESSAGE( getIp(ip_pool.at(3)) == "46.70.6.1", "actual value: " << getIp(ip_pool.at(3)) );
+    BOOST_CHECK_MESSAGE( getIp(ip_pool.at(4)) == "1.10.2.1", "actual value: " << getIp(ip_pool.at(4)) );
+    BOOST_CHECK_MESSAGE( getIp(ip_pool.at(5)) == "1.2.6.1", "actual value: " << getIp(ip_pool.at(5)) );
+    BOOST_CHECK_MESSAGE( getIp(ip_pool.at(6)) == "1.2.3.4", "actual value: " << getIp(ip_pool.at(6)) );
 }
 
 BOOST_AUTO_TEST_CASE(check_filter_valid)

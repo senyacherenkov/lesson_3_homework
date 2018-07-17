@@ -49,13 +49,17 @@ int main(int argc, char const *argv[])
         filtering::showList(ip_pool);
 
         // filter by first byte and output
-        filtering::filter(ip_pool, "1");
+        for(auto& ip: filtering::filter(ip_pool, "1"))
+            std::cout << ip << std::endl;
 
 		// TODO filter by first and second bytes and output
-        filtering::filter(ip_pool, "46", "70");
+        for(auto& ip: filtering::filter(ip_pool, "46", "70"))
+            std::cout << ip << std::endl;
 
 		// TODO filter by any byte and output
-        filtering::filter_any(ip_pool, "46");
+        for(auto& ip: filtering::filter_any(ip_pool, "46"))
+            std::cout << ip << std::endl;
+
 		// 222.173.235.246
 		// 222.130.177.64
 		// 222.82.198.61
